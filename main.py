@@ -24,7 +24,6 @@ name_map = {
     "jinyu": "金鱼",
 }
 
-WELCOME_TEXT = "欢迎！"
 # =======================================================================
 
 DB_DIR = "/app/data"
@@ -100,7 +99,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         param = None
 
-    # 处理参数：记录并通知管理员，但不回复用户来源
     if param and param in name_map:
         source = name_map[param]
         save_click(user_id, source)
@@ -114,10 +112,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             chat_id=ADMIN_ID,
             text=f"🔔 新用户来源：\n用户ID: {user_id}\n用户名: @{username}\n来源: {param}"
         )
-    # 无参数时不做特殊处理
-
-    # 统一回复简短欢迎语（不暴露来源）
-    await update.message.reply_text(WELCOME_TEXT)
+    # 不再回复任何消息给用户
 
 
 async def getlink(update: Update, context: ContextTypes.DEFAULT_TYPE):
